@@ -11,14 +11,18 @@ const printPassTimes = function (passTimes) {
     console.log(`Next pass at ${datetime} for ${duration} seconds!`);
   }
 };
-
+/*
 fetchMyIP()
   .then(fetchCoordsByIP)
   .then(fetchISSFlyOverTimes)
-  .then(nextISSTimesForMyLocation)
-  .then(body => console.log(body)) // error here, why?
+  .then(body => console.log(body));
+    nextISSTimesForMyLocation)
+  .then(body => console.log(body)) */ // error here, why? -> solved, was missing resolve in fetchISSFlyOverTimes function
 
-// nextISSTimesForMyLocation()
-//   .then((passTimes) => {
-//     printPassTimes(passTimes);
-//   })
+nextISSTimesForMyLocation()
+  .then((passTimes) => {
+    printPassTimes(passTimes);
+  })
+  // .catch((error) => {
+  //   console.log("It didn't work :( : ", error.message);
+  // })

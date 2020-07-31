@@ -29,8 +29,8 @@ const fetchCoordsByIP = function (body) {
 
 const fetchISSFlyOverTimes = function (body) {
   const { latitude, longitude } = JSON.parse(body).data;
-  let url = `http://api.open-notify.org/iss-pass.json?lat=${latitude}&lon=${longitude}`;
-  return (url);
+  const url = `http://api.open-notify.org/iss-pass.json?lat=${latitude}&lon=${longitude}`;
+  return request(url);
 };
 
 /* 
@@ -38,10 +38,15 @@ const fetchISSFlyOverTimes = function (body) {
  * Returns: Promise for fly over data for users location
  */
 
-const nextISSTimesForMyLocation = function (body) {
-  const { response } = JSON.parse(body);
-  return response;
-}
+const nextISSTimesForMyLocation = function () {
+  return fetchMyIP()
+  .then(fetchCoordsByIP)
+  .then(fetchISSFlyOverTimes)
+  .then((body) => {
+    const { response } = JSON.parse(body);
+    return response;
+  });
+};
 
 
-module.exports = { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes, nextISSTimesForMyLocation };
+module.exports = { /* fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes, */ nextISSTimesForMyLocation };
