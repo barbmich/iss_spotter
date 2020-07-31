@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/barbmich/iss_spotter#readme",
   "dependencies": {
+    "moment-timezone": "^0.5.31",
     "request": "^2.88.2"
   }
 }
