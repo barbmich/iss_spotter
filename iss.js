@@ -63,6 +63,7 @@ const fetchISSFlyOverTimes = function(coords, callback) {
     }
     // declare an array that lists the next 5 times the iss is above us 
     const passes = JSON.parse(body).response;
+    // we send it to the next function
     return callback(null, passes)
   })
 };
@@ -76,6 +77,9 @@ const fetchISSFlyOverTimes = function(coords, callback) {
  *   - The fly-over times as an array (null if error):
  *     [ { risetime: <number>, duration: <number> }, ... ]
  */ 
+
+// we create a callback chain that passes the information obtained from one, to the other as argument.
+// che nesting is necessary due to its async condition.
 const nextISSTimesForMyLocation = function(callback) {
   fetchMyIP((error, ip) => {
     if (error) {
