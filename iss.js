@@ -41,12 +41,15 @@ const fetchCoordsByIP = function(ip, callback) {
       callback(Error(msg), null);
       return;
     }
+    // declare an object with latitude and longitude through parsing body.data
     const { latitude, longitude } = JSON.parse(body).data;
+    // we send coordinates info through callback to the following function
     return callback(null, { latitude, longitude });
   })
 };
 
 const fetchISSFlyOverTimes = function(coords, callback) {
+  // now that we have our location, we obtain when the iss passes through our location
   const url = `http://api.open-notify.org/iss-pass.json?lat=${coords.latitude}&lon=${coords.longitude}`;
   request(url, (error, response, body) => {
     if (error) {
@@ -58,6 +61,7 @@ const fetchISSFlyOverTimes = function(coords, callback) {
       callback(Error(msg), null);
       return;
     }
+    // declare an array that lists the next 5 times the iss is above us 
     const passes = JSON.parse(body).response;
     return callback(null, passes)
   })
@@ -94,4 +98,4 @@ const nextISSTimesForMyLocation = function(callback) {
   });
 };
 
-module.exports = { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes, nextISSTimesForMyLocation };
+module.exports = { /* fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes, */ nextISSTimesForMyLocation };
