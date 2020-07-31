@@ -6,7 +6,7 @@ const request = require('request-promise-native');
  * Returns: Promise of request for ip data, returned as JSON string
  */
 
-const fetchMyIP = function() {
+const fetchMyIP = function () {
   return request("https://api.ipify.org?format=json");
 };
 
@@ -16,14 +16,32 @@ const fetchMyIP = function() {
  * Returns: Promise of request for lat/lon
  */
 
-const fetchCoordsByIP = function(body) {
+const fetchCoordsByIP = function (body) {
   const ip = JSON.parse(body).ip;
   return request(`https://ipvigilante.com/json/${ip}`);
-}
+};
 
-const fetchISSFlyOverTimes = function(body) {
+/*
+ * Requests data from api.open-notify.org using provided lat/long data
+ * Input: JSON body containing geo data response from ipvigilante.com
+ * Returns: Promise of request for fly over data, returned as JSON string
+ */
+
+const fetchISSFlyOverTimes = function (body) {
   const { latitude, longitude } = JSON.parse(body).data;
-  return (`http://api.open-notify.org/iss-pass.json?lat=${latitude}&lon=${longitude}`);
+  let url = `http://api.open-notify.org/iss-pass.json?lat=${latitude}&lon=${longitude}`;
+  return (url);
+};
+
+/* 
+ * Input: None
+ * Returns: Promise for fly over data for users location
+ */
+
+const nextISSTimesForMyLocation = function (body) {
+  const { response } = JSON.parse(body);
+  return response;
 }
 
-module.exports = { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes };
+
+module.exports = { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes, nextISSTimesForMyLocation };
