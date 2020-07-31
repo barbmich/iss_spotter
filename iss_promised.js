@@ -21,4 +21,9 @@ const fetchCoordsByIP = function(body) {
   return request(`https://ipvigilante.com/json/${ip}`);
 }
 
-module.exports = { fetchMyIP, fetchCoordsByIP };
+const fetchISSFlyOverTimes = function(body) {
+  const { latitude, longitude } = JSON.parse(body).data;
+  return (`http://api.open-notify.org/iss-pass.json?lat=${latitude}&lon=${longitude}`);
+}
+
+module.exports = { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes };
