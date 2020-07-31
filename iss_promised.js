@@ -16,6 +16,9 @@ const fetchMyIP = function() {
  * Returns: Promise of request for lat/lon
  */
 
-const fetchCoordsByIP = function(body) {}
+const fetchCoordsByIP = function(body) {
+  const ip = JSON.parse(body).ip;
+  return request(`https://ipvigilante.com/json/${ip}`);
+}
 
-module.exports = { fetchMyIP };
+module.exports = { fetchMyIP, fetchCoordsByIP };
